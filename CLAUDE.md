@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Full-stack prediction market built on Bitcoin Layer 1 with OP_NET. AI oracle resolution + CPMM AMM + collateralized lending.
+The first prediction market with AI oracle resolution and collateralized outcome-token lending on Bitcoin L1 via OP_NET. Full-stack: 6 smart contracts + backend API + React frontend.
 
 ## Structure
 
