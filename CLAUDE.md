@@ -58,9 +58,6 @@ Full-stack prediction market built on Bitcoin Layer 1 with OP_NET. AI oracle res
 - OracleResolver: `opt1sqr93erwvhgdk9rpl7y3pncq6c9n85she3g78xfhj`
 - ReputationTracker: `opt1sqzr36zm92pfcwx2aytxcywyrj6yg7k8cdqadxmcj`
 
-## Server
+## Live
 
-- IP: 94.154.34.131
-- Domains: thesisprotocol.org, prophetbt.cc
-- Frontend: /opt/prophet/frontend/dist/
-- Backend: /opt/prophet/backend/ (pm2: prophet-api)
+- Website: https://thesisprotocol.org
