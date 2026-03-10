@@ -1,7 +1,7 @@
 # THESIS PROTOCOL Security Audit Report
 
 ## Architecture Overview
-Thesis Protocol is an AI-powered prediction market platform running on Bitcoin L1 via OP_NET. It consists of 6 smart contracts, a backend API, and a React frontend.
+Thesis Protocol is the first prediction market with AI oracle resolution and collateralized outcome-token lending on Bitcoin L1 via OP_NET. It consists of 6 smart contracts, a backend API, and a React frontend.
 
 ## Smart Contract Security
 
