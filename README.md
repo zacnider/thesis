@@ -1,6 +1,6 @@
 # THESIS PROTOCOL — AI-Powered Prediction Markets on Bitcoin L1
 
-> The first prediction market with AI oracle resolution, built on Bitcoin L1 via OP_NET.
+> The first prediction market with AI oracle resolution and collateralized outcome-token lending, built on Bitcoin L1 via OP_NET.
 
 ![Bitcoin](https://img.shields.io/badge/Bitcoin-L1-orange) ![OP_NET](https://img.shields.io/badge/OP__NET-Testnet-purple) ![AI](https://img.shields.io/badge/AI-Oracle-gold)
 
@@ -20,27 +20,27 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                        FRONTEND                             │
-│   React + Vite + TypeScript                                 │
+│                        FRONTEND                              │
+│   React + Vite + TypeScript                                  │
 │   Brutalist UI — Syne + DM Mono                             │
 │   Pages: Home, Explore, Market Detail, Create,              │
-│          Portfolio, Lending, Leaderboard                    │
+│          Portfolio, Lending, Leaderboard                      │
 ├─────────────────────────────────────────────────────────────┤
-│                        BACKEND                              │
-│   hyper-express API + SQLite + Anthropic AI                 │
-│   /api/markets, /api/trades, /api/ai, /api/leaderboard      │
+│                        BACKEND                               │
+│   hyper-express API + SQLite + Anthropic AI                  │
+│   /api/markets, /api/trades, /api/ai, /api/leaderboard     │
 ├─────────────────────────────────────────────────────────────┤
-│                     SMART CONTRACTS                         │
-│   ┌───────────────┐  ┌──────────────┐  ┌────────────────┐   │
-│   │ PredictionMkt │  │ OutcomeToken │  │ MarketFactory  │   │
-│   │ CPMM AMM      │  │ OP20 YES/NO  │  │ Registry       │   │ 
-│   └───────────────┘  └──────────────┘  └────────────────┘   │
-│   ┌───────────────┐  ┌──────────────┐  ┌────────────────┐   │
-│   │ OracleResolver│  │ Reputation   │  │ LendingPool    │   │
-│   │ Bond disputes │  │ Stats/Streak │  │ Collat. Loans  │   │
-│   └───────────────┘  └──────────────┘  └────────────────┘   │
+│                     SMART CONTRACTS                          │
+│   ┌───────────────┐  ┌──────────────┐  ┌────────────────┐  │
+│   │ PredictionMkt │  │ OutcomeToken │  │ MarketFactory  │  │
+│   │ CPMM AMM      │  │ OP20 YES/NO  │  │ Registry       │  │
+│   └───────────────┘  └──────────────┘  └────────────────┘  │
+│   ┌───────────────┐  ┌──────────────┐  ┌────────────────┐  │
+│   │ OracleResolver│  │ Reputation   │  │ LendingPool    │  │
+│   │ Bond disputes  │  │ Stats/Streak │  │ Collat. Loans  │  │
+│   └───────────────┘  └──────────────┘  └────────────────┘  │
 ├─────────────────────────────────────────────────────────────┤
-│                   BITCOIN L1 (OP_NET)                       │
+│                   BITCOIN L1 (OP_NET)                        │
 └─────────────────────────────────────────────────────────────┘
 ```
 
