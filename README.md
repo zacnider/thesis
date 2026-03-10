@@ -20,27 +20,27 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                        FRONTEND                              │
-│   React + Vite + TypeScript                                  │
+│                        FRONTEND                             │
+│   React + Vite + TypeScript                                 │
 │   Brutalist UI — Syne + DM Mono                             │
 │   Pages: Home, Explore, Market Detail, Create,              │
-│          Portfolio, Lending, Leaderboard                      │
+│          Portfolio, Lending, Leaderboard                    │
 ├─────────────────────────────────────────────────────────────┤
-│                        BACKEND                               │
-│   hyper-express API + SQLite + Anthropic AI                  │
-│   /api/markets, /api/trades, /api/ai, /api/leaderboard     │
+│                        BACKEND                              │
+│   hyper-express API + SQLite + Anthropic AI                 │
+│   /api/markets, /api/trades, /api/ai, /api/leaderboard      │
 ├─────────────────────────────────────────────────────────────┤
-│                     SMART CONTRACTS                          │
-│   ┌───────────────┐  ┌──────────────┐  ┌────────────────┐  │
-│   │ PredictionMkt │  │ OutcomeToken │  │ MarketFactory  │  │
-│   │ CPMM AMM      │  │ OP20 YES/NO  │  │ Registry       │  │
-│   └───────────────┘  └──────────────┘  └────────────────┘  │
-│   ┌───────────────┐  ┌──────────────┐  ┌────────────────┐  │
-│   │ OracleResolver│  │ Reputation   │  │ LendingPool    │  │
-│   │ Bond disputes  │  │ Stats/Streak │  │ Collat. Loans  │  │
-│   └───────────────┘  └──────────────┘  └────────────────┘  │
+│                     SMART CONTRACTS                         │
+│   ┌───────────────┐  ┌──────────────┐  ┌────────────────┐   │
+│   │ PredictionMkt │  │ OutcomeToken │  │ MarketFactory  │   │
+│   │ CPMM AMM      │  │ OP20 YES/NO  │  │ Registry       │   │ 
+│   └───────────────┘  └──────────────┘  └────────────────┘   │
+│   ┌───────────────┐  ┌──────────────┐  ┌────────────────┐   │
+│   │ OracleResolver│  │ Reputation   │  │ LendingPool    │   │
+│   │ Bond disputes │  │ Stats/Streak │  │ Collat. Loans  │   │
+│   └───────────────┘  └──────────────┘  └────────────────┘   │
 ├─────────────────────────────────────────────────────────────┤
-│                   BITCOIN L1 (OP_NET)                        │
+│                   BITCOIN L1 (OP_NET)                       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
