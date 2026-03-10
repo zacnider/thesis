@@ -1,0 +1,28 @@
+{
+  "name": "prophet-contracts",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Prophet - AI-Powered Prediction Market on Bitcoin L1 via OP_NET",
+  "scripts": {
+    "build:market": "asc src/market/index.ts --target market --measure --uncheckedBehavior never",
+    "build:token": "asc src/outcome-token/index.ts --target outcome-token --measure --uncheckedBehavior never",
+    "build:factory": "asc src/factory/index.ts --target factory --measure --uncheckedBehavior never",
+    "build:oracle": "asc src/oracle/index.ts --target oracle --measure --uncheckedBehavior never",
+    "build:reputation": "asc src/reputation/index.ts --target reputation --measure --uncheckedBehavior never",
+    "build:lending": "asc src/lending/index.ts --target lending --measure --uncheckedBehavior never",
+    "build:faucet": "asc src/faucet-token/index.ts --target faucet-token --measure --uncheckedBehavior never",
+    "build": "npm run build:token && npm run build:market && npm run build:factory && npm run build:oracle && npm run build:reputation && npm run build:lending && npm run build:faucet",
+    "deploy": "tsx deploy.ts"
+  },
+  "dependencies": {
+    "@btc-vision/as-bignum": "latest",
+    "@btc-vision/btc-runtime": "rc",
+    "@btc-vision/assemblyscript": "latest",
+    "@btc-vision/opnet-transform": "latest",
+    "@btc-vision/transaction": "rc",
+    "@btc-vision/bitcoin": "rc",
+    "opnet": "rc",
+    "dotenv": "^16.3.0",
+    "tsx": "^4.7.0"
+  }
+}

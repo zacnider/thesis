@@ -1,0 +1,200 @@
+{
+    "functions": [
+        {
+            "name": "depositCollateral",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "isYes",
+                    "type": "BOOL"
+                },
+                {
+                    "name": "amount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "withdrawCollateral",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "isYes",
+                    "type": "BOOL"
+                },
+                {
+                    "name": "amount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "borrow",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "repay",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "setPrice",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "yesPrice",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "noPrice",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "settleAfterResolution",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "outcome",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "getPositionInfo",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "ADDRESS"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "yesCollateral",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "noCollateral",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "borrowed",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "maxBorrow",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "interestOwed",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "getPoolInfo",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "totalYesCollateral",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "totalNoCollateral",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "totalBorrowed",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "loanCount",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "ltvNumerator",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "interestRate",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "resolved",
+                    "type": "BOOL"
+                },
+                {
+                    "name": "winningOutcome",
+                    "type": "UINT256"
+                }
+            ]
+        }
+    ],
+    "events": []
+}

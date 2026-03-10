@@ -1,0 +1,118 @@
+{
+    "functions": [
+        {
+            "name": "recordPrediction",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "ADDRESS"
+                },
+                {
+                    "name": "marketAddress",
+                    "type": "ADDRESS"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "recordResolution",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "ADDRESS"
+                },
+                {
+                    "name": "isCorrect",
+                    "type": "BOOL"
+                },
+                {
+                    "name": "profitAmount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "getUserStats",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "ADDRESS"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "totalPredictions",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "correctPredictions",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "winStreak",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "bestStreak",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "totalProfit",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "getTotalUsers",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "totalUsers",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "getAccuracy",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "ADDRESS"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "accuracy",
+                    "type": "UINT256"
+                }
+            ]
+        }
+    ],
+    "events": []
+}

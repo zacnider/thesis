@@ -1,0 +1,158 @@
+{
+    "functions": [
+        {
+            "name": "proposeResolution",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "marketAddress",
+                    "type": "ADDRESS"
+                },
+                {
+                    "name": "outcome",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "bondAmount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "disputeResolution",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "marketAddress",
+                    "type": "ADDRESS"
+                },
+                {
+                    "name": "newOutcome",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "disputeBond",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "finalizeResolution",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "marketAddress",
+                    "type": "ADDRESS"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "outcome",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "emergencyResolve",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "marketAddress",
+                    "type": "ADDRESS"
+                },
+                {
+                    "name": "outcome",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "getProposal",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "marketAddress",
+                    "type": "ADDRESS"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "state",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "outcome",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "bond",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "proposalBlock",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "getMinimumBond",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "minimumBond",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "setMinimumBond",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "newMinBond",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        }
+    ],
+    "events": []
+}

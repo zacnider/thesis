@@ -1,0 +1,226 @@
+{
+    "functions": [
+        {
+            "name": "setTokenAddresses",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "yesToken",
+                    "type": "ADDRESS"
+                },
+                {
+                    "name": "noToken",
+                    "type": "ADDRESS"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "buyOutcome",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "isYes",
+                    "type": "BOOL"
+                },
+                {
+                    "name": "collateralAmount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "tokensOut",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "sellOutcome",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "isYes",
+                    "type": "BOOL"
+                },
+                {
+                    "name": "tokenAmount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "collateralOut",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "resolve",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "outcome",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "redeem",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "payout",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "getPrice",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "yesPrice",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "noPrice",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "getMarketInfo",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "yesReserve",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "noReserve",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "totalCollateral",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "totalTrades",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "totalVolume",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "feeRate",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "endBlock",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "resolved",
+                    "type": "BOOL"
+                },
+                {
+                    "name": "winningOutcome",
+                    "type": "UINT256"
+                },
+                {
+                    "name": "accumulatedFees",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "getQuote",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "isYes",
+                    "type": "BOOL"
+                },
+                {
+                    "name": "collateralAmount",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "tokensOut",
+                    "type": "UINT256"
+                }
+            ]
+        },
+        {
+            "name": "setFeeRate",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [
+                {
+                    "name": "feeRate",
+                    "type": "UINT256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "BOOL"
+                }
+            ]
+        },
+        {
+            "name": "withdrawFees",
+            "type": "Function",
+            "payable": false,
+            "onlyOwner": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "fees",
+                    "type": "UINT256"
+                }
+            ]
+        }
+    ],
+    "events": []
+}

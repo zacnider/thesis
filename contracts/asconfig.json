@@ -1,0 +1,53 @@
+{
+  "targets": {
+    "market": {
+      "outFile": "build/PredictionMarket.wasm",
+      "use": ["abort=src/market/index/abort"]
+    },
+    "outcome-token": {
+      "outFile": "build/OutcomeToken.wasm",
+      "use": ["abort=src/outcome-token/index/abort"]
+    },
+    "factory": {
+      "outFile": "build/MarketFactory.wasm",
+      "use": ["abort=src/factory/index/abort"]
+    },
+    "oracle": {
+      "outFile": "build/OracleResolver.wasm",
+      "use": ["abort=src/oracle/index/abort"]
+    },
+    "reputation": {
+      "outFile": "build/ReputationTracker.wasm",
+      "use": ["abort=src/reputation/index/abort"]
+    },
+    "lending": {
+      "outFile": "build/LendingPool.wasm",
+      "use": ["abort=src/lending/index/abort"]
+    },
+    "faucet-token": {
+      "outFile": "build/FaucetToken.wasm",
+      "use": ["abort=src/faucet-token/index/abort"]
+    }
+  },
+  "options": {
+    "sourceMap": false,
+    "optimizeLevel": 3,
+    "shrinkLevel": 1,
+    "converge": true,
+    "noAssert": false,
+    "enable": [
+      "sign-extension",
+      "mutable-globals",
+      "nontrapping-f2i",
+      "bulk-memory",
+      "simd",
+      "reference-types",
+      "multi-value"
+    ],
+    "runtime": "stub",
+    "memoryBase": 0,
+    "initialMemory": 1,
+    "exportStart": "start",
+    "transform": "@btc-vision/opnet-transform"
+  }
+}
