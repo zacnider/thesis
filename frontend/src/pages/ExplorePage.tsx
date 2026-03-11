@@ -7,7 +7,7 @@ import { useApi, apiPost } from '../hooks/useAPI';
 import { useProvider } from '../context/ProviderContext';
 import { OP20_ABI } from '../config/abis';
 import MarketCard from '../components/market/MarketCard';
-import { CATEGORIES } from '../config/constants';
+import { CATEGORIES, API_BASE } from '../config/constants';
 import type { CSSProperties } from 'react';
 
 const opnetTestnet = (networks as Record<string, typeof networks.testnet>).opnetTestnet;
@@ -48,6 +48,7 @@ export default function ExplorePage() {
     const [cmEndBlock, setCmEndBlock] = useState('');
     const [cmLoading, setCmLoading] = useState(false);
     const [cmError, setCmError] = useState('');
+    const [aiLoading, setAiLoading] = useState(false);
 
     const params = new URLSearchParams();
     if (status) params.set('status', status);
@@ -108,10 +109,34 @@ export default function ExplorePage() {
     const openModal = () => {
         setCmQuestion('');
         setCmDescription('');
-        setCmCategory('general');
+        setCmCategory(CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)]);
         setCmEndBlock('');
         setCmError('');
         setShowModal(true);
+    };
+
+    const handleAiSuggest = async () => {
+        setAiLoading(true);
+        setCmError('');
+        try {
+            const res = await fetch(`${API_BASE}/ai/suggest-market`);
+            if (!res.ok) throw new Error('AI service unavailable');
+            const data = await res.json();
+            const s = data.suggestion;
+            if (s) {
+                setCmQuestion(s.question || '');
+                setCmDescription(s.description || '');
+                if (s.category && CATEGORIES.includes(s.category)) setCmCategory(s.category);
+                if (s.durationDays) {
+                    const blocks = Math.round(s.durationDays * 144);
+                    setCmEndBlock(String(blocks));
+                }
+            }
+        } catch (err) {
+            setCmError('Bob couldn\'t generate a suggestion right now');
+        } finally {
+            setAiLoading(false);
+        }
     };
 
     const handleCreateMarket = async () => {
@@ -246,6 +271,15 @@ export default function ExplorePage() {
                         </div>
 
                         <div style={s.form}>
+                            <button
+                                style={{ ...s.aiBtn, ...(aiLoading ? { opacity: 0.6, cursor: 'not-allowed' } : {}) }}
+                                onClick={handleAiSuggest}
+                                disabled={aiLoading}
+                                type="button"
+                            >
+                                {aiLoading ? '🤖 BOB IS THINKING...' : '🤖 WITH AI — LET BOB SUGGEST'}
+                            </button>
+
                             <div style={s.field}>
                                 <label style={s.label}>
                                     QUESTION
@@ -392,4 +426,5 @@ const s: Record<string, CSSProperties> = {
     previewCard: { padding: 16, background: '#0a0a08', border: '1px solid rgba(245,200,66,0.08)' },
     error: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', background: 'rgba(248,113,113,0.06)', color: '#f87171', fontSize: 11, border: '1px solid rgba(248,113,113,0.15)', fontFamily: "'DM Mono', monospace" },
     submitBtn: { width: '100%', padding: 14, fontSize: 12, fontWeight: 700, background: '#f5c842', color: '#0a0a08', border: 'none', cursor: 'pointer', fontFamily: "'Syne', sans-serif", letterSpacing: '0.08em' },
+    aiBtn: { width: '100%', padding: 14, fontSize: 12, fontWeight: 700, background: 'transparent', color: '#f5c842', border: '1px dashed rgba(245,200,66,0.4)', cursor: 'pointer', fontFamily: "'Syne', sans-serif", letterSpacing: '0.08em' },
 };
