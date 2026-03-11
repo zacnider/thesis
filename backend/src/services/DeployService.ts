@@ -37,7 +37,9 @@ const TUSDT_MAX_SUPPLY = 1000000000n * (10n ** 18n); // 1B max (minted on demand
 const DEFAULT_INITIAL_LIQUIDITY = 1000n * (10n ** 18n);
 const DEFAULT_FEE_RATE = 100n;
 const REGISTER_MARKET_SELECTOR = 0xba6fdddb;
-const SET_TOKEN_ADDRESSES_SELECTOR = 0x664aef3f; // SHA256("setTokenAddresses(address,address)") first 4 bytes
+const SET_TOKEN_ADDRESSES_SELECTOR = 0x664aef3f;
+const ADMIN_MINT_SELECTOR = 0x6272783d; // adminMint(address,uint256) — SHA-256 (OP_NET)
+const LENDING_POOL_FUND_AMOUNT = 50000n * (10n ** 18n); // Her pool'a 50K tUSDT fonla
 const POLL_INTERVAL_MS = 15000;
 const MAX_WAIT_MS = 3600000; // 60 min per step — testnet blocks can be slow
 
@@ -286,7 +288,7 @@ class DeployService {
                 }
             } catch (err: any) {
                 const msg = err.message || '';
-                if (!msg.includes('not found') && !msg.includes('Could not find')) {
+                if (!msg.includes('not found') && !msg.includes('Could not find') && !msg.includes('Cannot read properties of undefined')) {
                     console.log(`[DeployService] ${label} receipt error: ${msg}`);
                 }
             }
@@ -511,7 +513,7 @@ class DeployService {
                         await this.provider.sendRawTransaction(setTokenInteraction.fundingTransaction, false);
                     }
                     const setTokenTxId = await this.provider.sendRawTransaction(setTokenInteraction.interactionTransaction, false);
-                    const setTokenTxHash = typeof setTokenTxId === 'string' ? setTokenTxId : '';
+                    const setTokenTxHash = typeof setTokenTxId === 'string' ? setTokenTxId : (setTokenTxId as any)?.result || '';
 
                     this.updateStatus({ stepLabel: 'Waiting for setTokenAddresses confirmation...' });
                     if (setTokenTxHash) {
@@ -566,7 +568,7 @@ class DeployService {
                             await this.provider.sendRawTransaction(interaction.fundingTransaction, false);
                         }
                         const txId = await this.provider.sendRawTransaction(interaction.interactionTransaction, false);
-                        const txHash = typeof txId === 'string' ? txId : '';
+                        const txHash = typeof txId === 'string' ? txId : (txId as any)?.result || '';
 
                         this.updateStatus({ stepLabel: 'Waiting for factory registration...' });
                         if (txHash) {
@@ -602,6 +604,7 @@ class DeployService {
                 lendingCalldata.writeAddress(Address.fromString(marketPubKey));   // marketAddress
                 lendingCalldata.writeAddress(Address.fromString(yesPubKey));      // yesToken
                 lendingCalldata.writeAddress(Address.fromString(noPubKey));       // noToken
+                lendingCalldata.writeAddress(Address.fromString(this.collateralTokenPubKey));  // tUSDT (borç verilen token)
                 lendingCalldata.writeU256(5000n);  // LTV 50% (bps)
                 lendingCalldata.writeU256(500n);   // Interest 5% (bps)
 
@@ -624,6 +627,45 @@ class DeployService {
                 await this.provider.sendRawTransaction(lendingDeploy.transaction[1], false);
                 this.updateStatus({ stepLabel: 'Waiting for LendingPool confirmation...' });
                 await this.waitForContractDeployment(lendingPoolAddress, 'Step 6 (LendingPool)');
+
+                // Step 6b: adminMint ile doğrudan LendingPool'a 50K tUSDT mint et
+                if (this.collateralTokenAddress && this.collateralTokenPubKey && lendingPoolPubKey) {
+                    console.log('[DeployService] Step 6b: adminMint 50K tUSDT to LendingPool...');
+                    this.updateStatus({ stepLabel: 'Funding LendingPool with 50K tUSDT...' });
+                    try {
+                        const mintUtxos = await this.getFreshUtxos('Step 6b adminMint');
+                        const mintCalldata = new BinaryWriter();
+                        mintCalldata.writeSelector(ADMIN_MINT_SELECTOR);
+                        mintCalldata.writeAddress(Address.fromString(lendingPoolPubKey));
+                        mintCalldata.writeU256(LENDING_POOL_FUND_AMOUNT);
+
+                        const challengeMint = await this.provider.getChallenge();
+                        const mintTx = await this.factory.signInteraction({
+                            from: this.account.p2tr, to: this.collateralTokenAddress,
+                            contract: this.collateralTokenPubKey, utxos: mintUtxos,
+                            signer: this.account.keypair, mldsaSigner: this.account.mldsaKeypair,
+                            network, feeRate: 5, priorityFee: 0n, gasSatFee: 10000n,
+                            calldata: mintCalldata.getBuffer(), challenge: challengeMint,
+                        } as IInteractionParameters);
+
+                        if (mintTx.fundingTransaction) {
+                            await this.provider.sendRawTransaction(mintTx.fundingTransaction, false);
+                        }
+                        const mintTxRaw = await this.provider.sendRawTransaction(mintTx.interactionTransaction, false);
+                        const mintTxHash = typeof mintTxRaw === 'string' ? mintTxRaw : (mintTxRaw as any)?.result || '';
+                        console.log('[DeployService] adminMint TX sent:', mintTxHash, 'raw:', JSON.stringify(mintTxRaw));
+
+                        if (mintTxHash) {
+                            await this.waitForTxConfirmation(mintTxHash, 'Step 6b (adminMint)');
+                            console.log('[DeployService] LendingPool funded with 50K tUSDT (CONFIRMED)');
+                        } else {
+                            await sleep(POLL_INTERVAL_MS * 4);
+                            console.log('[DeployService] adminMint sent (no hash, waited)');
+                        }
+                    } catch (fundErr: any) {
+                        console.error('[DeployService] FAILED to fund LendingPool:', fundErr.message);
+                    }
+                }
             } else {
                 console.log('[DeployService] LendingPool.wasm not found, skipping');
             }
