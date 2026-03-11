@@ -16,7 +16,7 @@ export interface GeneratedMarket {
 }
 
 // Bob's personality — the AI oracle
-const BOB_SYSTEM_PROMPT = `You are Bob, the AI oracle of Thesis Protocol — Bitcoin's first AI-powered prediction market.
+const BOB_SYSTEM_PROMPT = `You are Bob, the AI oracle of Thesis Protocol — an AI-powered prediction market platform built on OP_NET.
 
 Your personality:
 - You're a sharp, witty market maker who loves controversy and bold takes
@@ -34,10 +34,20 @@ Your market creation style:
 - Create narrative arcs: "If X happens, what about Y?" follow-up markets
 - Use specific numbers and dates, not vague ranges
 - Make descriptions punchy — 1-2 sentences that hook traders
-- Categories should feel natural, not forced`;
+- Categories should feel natural, not forced
+- IMPORTANT: You cover ALL topics — politics, sports, tech, AI, elections, science, entertainment, world events, regulations — NOT just crypto prices`;
+
+const ALL_CATEGORIES = ['crypto', 'politics', 'sports', 'tech', 'finance', 'bitcoin', 'general'] as const;
 
 class AIService {
     private client: Anthropic | null = null;
+    private categoryIndex = Math.floor(Math.random() * ALL_CATEGORIES.length);
+
+    private pickCategory(): string {
+        const cat = ALL_CATEGORIES[this.categoryIndex % ALL_CATEGORIES.length];
+        this.categoryIndex++;
+        return cat;
+    }
 
     init(): void {
         const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -103,10 +113,10 @@ Respond in JSON only:
     async generateMarketQuestions(existingQuestions: string[], count: number = 3): Promise<GeneratedMarket[]> {
         if (!this.client) {
             return [{
-                question: 'Will Bitcoin hit $150K before the halving cycle peak?',
-                category: 'bitcoin',
-                description: 'Every cycle BTC peaks 12-18 months post-halving. The clock is ticking.',
-                durationDays: 300,
+                question: 'Will AI models pass the Turing Test in a peer-reviewed study by end of 2026?',
+                category: 'tech',
+                description: 'The race to AGI intensifies. Will a top lab claim a peer-reviewed Turing Test pass this year?',
+                durationDays: 270,
             }];
         }
 
@@ -117,6 +127,12 @@ Respond in JSON only:
             const existingList = existingQuestions.length > 0
                 ? `\n\nMarkets already live on Thesis Protocol (DO NOT repeat these — create fresh angles):\n${existingQuestions.map(q => `- ${q}`).join('\n')}`
                 : '';
+
+            // Pick categories for each market to ensure diversity
+            const assignedCategories = Array.from({ length: count }, () => this.pickCategory());
+            const categoryInstruction = count === 1
+                ? `MANDATORY: This market MUST be in the "${assignedCategories[0]}" category. Do NOT use any other category.`
+                : `MANDATORY: Each market MUST use the category assigned below IN ORDER:\n${assignedCategories.map((c, i) => `  Market ${i + 1}: "${c}"`).join('\n')}\nDo NOT change these categories.`;
 
             const response = await this.client.messages.create({
                 model: 'claude-sonnet-4-20250514',
@@ -131,15 +147,18 @@ Today: ${new Date().toISOString().split('T')[0]}
 
 CRITICAL: Use the LIVE DATA above to create markets. Reference actual headlines, real prices, real events. Don't make up news — react to what's actually happening.
 
+${categoryInstruction}
+
 Rules:
 1. Each question MUST have a specific resolution date/deadline baked into the question text
-2. Mix your timeframes — at least one short-term (days/weeks) and one longer-term (months)
-3. Be specific with numbers — use the real prices above as anchors (e.g. if BTC is $85K, ask about $90K or $80K, not $150K)
-4. Make descriptions that hook traders — reference the actual headline/event that inspired the market
-5. At least one market MUST directly reference a headline from the news data above
-6. At least one market MUST reference current crypto prices
+2. Mix your timeframes — some short-term (days/weeks), some longer-term (months)
+3. Be specific with numbers and dates
+4. Make descriptions that hook traders — reference real events
+5. ABSOLUTELY CRITICAL: Do NOT create "Will Bitcoin/BTC hit $X?" or "Will BTC price reach/stay above/below $X?" markets. These are BANNED. Never suggest crypto price prediction markets.
+6. Instead, focus on: politics (elections, legislation), sports (tournaments, records), tech (product launches, AI milestones), science (space missions, discoveries), entertainment (awards, releases), world events (treaties, summits), regulations (SEC decisions, bans)
+7. Be creative — predict outcomes of real events happening in the world, NOT cryptocurrency prices
 
-Categories: crypto, politics, sports, tech, finance, bitcoin, general
+Available categories: crypto, politics, sports, tech, finance, bitcoin, general
 
 For duration_days: this is days from today until resolution. Match it to your question's deadline.
 - "by end of this week" = 3-7 days
@@ -153,7 +172,7 @@ Respond with a JSON array ONLY — no commentary:
 [
   {
     "question": "Specific question with deadline?",
-    "category": "category",
+    "category": "assigned_category_from_above",
     "description": "Punchy 1-2 sentence hook for traders. Reference the real event/data.",
     "duration_days": 30
   }
