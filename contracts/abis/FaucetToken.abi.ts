@@ -9,6 +9,15 @@ export const FaucetTokenAbi = [
         outputs: [{ name: 'success', type: ABIDataTypes.BOOL }],
         type: BitcoinAbiTypes.Function,
     },
+    {
+        name: 'adminMint',
+        inputs: [
+            { name: 'to', type: ABIDataTypes.ADDRESS },
+            { name: 'amount', type: ABIDataTypes.UINT256 },
+        ],
+        outputs: [{ name: 'success', type: ABIDataTypes.BOOL }],
+        type: BitcoinAbiTypes.Function,
+    },
     ...FaucetTokenEvents,
     ...OP_NET_ABI,
 ];
