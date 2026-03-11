@@ -10,7 +10,7 @@ import { useTokenBalance } from '../hooks/useTokenBalance';
 import { OP20_ABI } from '../config/abis';
 import type { CSSProperties } from 'react';
 
-import { API_BASE } from '../config/constants';
+import { API_BASE, CONTRACTS } from '../config/constants';
 
 const opnetTestnet = (networks as Record<string, typeof networks.testnet>).opnetTestnet;
 
@@ -63,6 +63,7 @@ export default function LendingPage() {
         selectedMarket?.lending_pool_address,
         selectedMarket?.yes_token,
         selectedMarket?.no_token,
+        CONTRACTS.COLLATERAL_TOKEN,
     );
 
     useEffect(() => {
@@ -274,7 +275,8 @@ export default function LendingPage() {
                                                 else if (tab === 'borrow') maxVal = position?.maxBorrow || 0n;
                                                 else if (tab === 'repay') maxVal = (position?.borrowed || 0n) + (position?.interestOwed || 0n);
                                                 else if (tab === 'withdraw') maxVal = isYes ? (position?.yesCollateral || 0n) : (position?.noCollateral || 0n);
-                                                const val = maxVal * BigInt(pct) / 100n;
+                                                const effectivePct = (pct === 100 && (tab === 'deposit' || tab === 'withdraw')) ? 98 : pct;
+                                                const val = maxVal * BigInt(effectivePct) / 100n;
                                                 const numVal = Number(val) / 1e18;
                                                 return (
                                                     <button
